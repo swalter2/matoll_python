@@ -78,8 +78,8 @@ def api_hello():
     else:
         return 'Hello John Doe'
 
-#curl -H "Content-type: application/json" \-X POST http://127.0.0.1:5000/matoll -d '{"message":"Hello Data"}'
-@app.route('/matoll', methods = ['POST'])
+#curl -H "Content-type: application/json" \-X GET http://127.0.0.1:5000/matoll -d '{"message":"Hello Data"}' => Maybe POST is better
+@app.route('/matoll', methods = ['GET'])
 def api_message():
     if request.headers['Content-Type'] == 'application/json':
         json_input = request.json
