@@ -5,7 +5,9 @@ app = Flask(__name__)
 results_automatic = []
 uris_automatic = set()
 
-
+'''
+Simple Serveice
+'''
 def load_lexicon(file, frequency=1):
     results = []
     uris = set()
