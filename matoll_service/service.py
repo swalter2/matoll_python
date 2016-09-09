@@ -48,6 +48,7 @@ def ask_for_term():
             term = ''
             pos = ''
             uri = ''
+            freq = ''
             try:
                 term = json_input['term']
             except:
@@ -59,11 +60,18 @@ def ask_for_term():
                 pass
 
             try:
+                freq = json_input['freq']
+            except:
+                pass
+
+            try:
                 pos = json_input['pos']
             except:
                 pass
+
             if term != '':
                 return jsonify(get_entries_by_name(term))
+
 
             if pos != '':
                 return jsonify(get_entries_by_pos(pos))
@@ -71,12 +79,16 @@ def ask_for_term():
             if uri != '':
                 return jsonify(get_entries_by_uri(uri))
 
+            if freq != '':
+                return jsonify(get_entries_by_frequency(freq))
+
         except:
             print("Unexpected error:", sys.exc_info()[0])
+            raise
             return "500 Server Error ;)"
     else:
         return "415 Unsupported Media Type ;)"
 
 
 if __name__ == '__main__':
-    service.run(debug=False)
+    service.run(debug=True)
