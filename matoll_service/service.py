@@ -3,6 +3,7 @@
 
 from flask import Flask, jsonify, request
 import sys
+from database import *
 
 from nltk.parse import malt
 # With MALT_PARSER and MALT_MODEL environment set.
@@ -19,8 +20,8 @@ def get_parsed_sentence(plain_sentence):
     return Conll
 
 
-@service.route('/service', methods=['POST'])
-def get_articles_for_id():
+@service.route('/parsing', methods=['GET'])
+def parse_sentences():
     print('in call')
     if request.headers['Content-Type'] == 'application/json':
         try:
@@ -32,6 +33,44 @@ def get_articles_for_id():
             parsed_sentence = get_parsed_sentence(plain_sentence)
             result['output'] = parsed_sentence
             return jsonify(result)
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
+            return "500 Server Error ;)"
+    else:
+        return "415 Unsupported Media Type ;)"
+
+
+@service.route('/matoll', methods=['GET'])
+def ask_for_term():
+    if request.headers['Content-Type'] == 'application/json':
+        try:
+            json_input = request.json
+            term = ''
+            pos = ''
+            uri = ''
+            try:
+                term = json_input['term']
+            except:
+                pass
+
+            try:
+                uri = json_input['uri']
+            except:
+                pass
+
+            try:
+                pos = json_input['pos']
+            except:
+                pass
+            if term != '':
+                return jsonify(get_entries_by_name(term))
+
+            if pos != '':
+                return jsonify(get_entries_by_pos(pos))
+
+            if uri != '':
+                return jsonify(get_entries_by_uri(uri))
+
         except:
             print("Unexpected error:", sys.exc_info()[0])
             return "500 Server Error ;)"
