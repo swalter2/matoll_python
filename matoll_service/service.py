@@ -49,6 +49,8 @@ def ask_for_term():
             pos = ''
             uri = ''
             freq = ''
+            lang = ''
+
             try:
                 term = json_input['term']
             except:
@@ -56,31 +58,52 @@ def ask_for_term():
 
             try:
                 uri = json_input['uri']
-            except:
+            except KeyError:
                 pass
 
             try:
                 freq = json_input['freq']
-            except:
+            except KeyError:
                 pass
 
             try:
                 pos = json_input['pos']
-            except:
+            except KeyError:
                 pass
 
-            if term != '':
-                return jsonify(get_entries_by_name(term))
+            try:
+                lang = json_input['lang']
+            except KeyError:
+                pass
 
 
+            if lang == '':
+                lang = 'EN'
+
+            counter = 0
+            if term!= '':
+                counter+=1
             if pos != '':
-                return jsonify(get_entries_by_pos(pos))
-
+                counter += 1
             if uri != '':
-                return jsonify(get_entries_by_uri(uri))
-
+                counter += 1
             if freq != '':
-                return jsonify(get_entries_by_frequency(freq))
+                counter += 1
+
+            if counter > 1:
+                return get_combined_result (freq, uri, pos, term, lang)
+
+            elif term != '':
+                return jsonify(get_entries_by_name(term,lang))
+
+            elif pos != '':
+                return jsonify(get_entries_by_pos(pos,lang))
+
+            elif uri != '':
+                return jsonify(get_entries_by_uri(uri,lang))
+
+            elif freq != '':
+                return jsonify(get_entries_by_frequency(freq,lang))
 
         except:
             print("Unexpected error:", sys.exc_info()[0])
