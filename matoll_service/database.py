@@ -29,7 +29,6 @@ def get_entries_by_name(name, lang = 'EN'):
             tmp['Languages'] = row[9]
             result[row[0]+'_'+str(counter)] = tmp
     con.close()
-    print(result)
     return result
 
 
@@ -146,7 +145,6 @@ def get_combined_result (freq, uri, pos, name, lang = 'EN'):
             query = query[:-4]
 
         query+=';'
-        print(query)
 
         cur.execute(query,hm)
         rows = cur.fetchall()

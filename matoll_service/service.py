@@ -76,7 +76,6 @@ def ask_for_term():
             except KeyError:
                 pass
 
-
             if lang == '':
                 lang = 'EN'
 
@@ -91,7 +90,7 @@ def ask_for_term():
                 counter += 1
 
             if counter > 1:
-                return get_combined_result (freq, uri, pos, term, lang)
+                return jsonify(get_combined_result (freq, uri, pos, term, lang))
 
             elif term != '':
                 return jsonify(get_entries_by_name(term,lang))
