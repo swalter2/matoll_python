@@ -3,3 +3,10 @@
 *.pyc
 
 .DS_Store
+.idea/*
+extracted/*
+old/matoll_service/.idea/*
+old/matoll_service/resource/maltparser-1.9.0/docs/*
+old/matoll_service/resource/maltparser-1.9.0/docs/api/src-html/org/maltparser/core/propagation/Propagation.html
+pickled_file.pickle
+processed_files.txt
